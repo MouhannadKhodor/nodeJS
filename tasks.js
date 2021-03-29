@@ -83,6 +83,9 @@ function onDataReceived(text) {
   else if (trimtxt(text,0).trim() === 'add') {
     add(trimtxt(text,1));
   }
+  else if (trimtxt(text,0).trim() === 'remove') {
+    remove(parseInt(trimtxt(text,1))-1);
+  }
   else if(trimtxt(text,0).trim() === 'hello'){
     hello(text);
   }
@@ -127,7 +130,7 @@ function list() {
 	var data = getData();
 	
 	if(data.length > 0){
-		//print the list. using ANSI colors and formating
+		//print the list.
 		console.log(`Task list: \n`);
 		data.forEach(function (task,index){
 			console.log(index+1+"."," ["+(task.completed ? " " : " ")+"] ",task.task);
@@ -150,6 +153,22 @@ function add(task) {
 	//set data
 	setData(data);
 
+  list()
+}
+
+//delete task
+function remove(task){
+	//get data
+	var data = getData();
+
+	//delete item
+	data.splice(task,task-task+1);
+
+	//set data
+	setData(data);
+
+	//list
+	list();
 }
 
 
