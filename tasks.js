@@ -161,10 +161,14 @@ function add(task) {
 
 //delete task
 function remove(task){
+  
 	//get data
 	var data = getData();
-
-	//delete item
+  if (task > data.length-1){
+    return console.log("wrong number ")
+  }
+  else{
+    //delete item
 	data.splice(task,task-task+1);
 
 	//set data
@@ -172,6 +176,8 @@ function remove(task){
 
 	//list
 	list();
+  }
+	
 }
 
 
