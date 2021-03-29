@@ -1,3 +1,38 @@
+var fs = require('fs');
+
+
+//constants
+var TASK_JSON_PATH = "./database.json";
+
+
+function init(){
+	//create file if it's present.
+	if(!fs.existsSync(TASK_JSON_PATH)){
+		console.log("Initialising storage.\n Creating `database.json` file");
+		setData([]);	
+	}
+	
+}
+
+function getData(){
+	//read file contents
+	var contents = fs.readFileSync(TASK_JSON_PATH);
+
+	//parse contents
+	var data = JSON.parse(contents);
+
+	return data;
+}
+
+
+function setData(data){
+	//strigify JSON
+	var dataString = JSON.stringify(data);
+
+	//write to  file
+	
+	fs.writeFileSync(TASK_JSON_PATH,dataString);
+}
 
 /**
  * Starts the application
@@ -15,6 +50,7 @@ function startApp(name){
   process.stdin.on('data', onDataReceived);
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
+  init()
 }
 
 
@@ -40,6 +76,9 @@ function trimtxt(text,i){
 function onDataReceived(text) {
   if (text.trim() === 'quit') {
     quit();
+  }
+  else if (text.trim() === 'list') {
+    list();
   }
   else if(trimtxt(text,0).trim() === 'hello'){
     hello(text);
@@ -77,6 +116,24 @@ function help() {
 	console.log("Usage: write tasks then one of the commands [add|check|delete|help] then write the task ");
 	console.log("`task` is only a string when using `add` and a number\nfor all other commands.");
 	console.log("Using the `tasks` without arguments lists all tasks");
+}
+
+function list() {
+	
+	//data
+	var data = getData();
+	
+	if(data.length > 0){
+		//print the list. using ANSI colors and formating
+		console.log("\x1b[93m\x1b[4mTask list:\x1b[24m");
+		data.forEach(function (task,index){
+			console.log(index+1+"."," ["+(task.completed ? "\x1b[92m✓\x1b[93m" : " ")+"] ",task.task);
+		});
+		
+	}else{
+		console.log("\x1b[91mNo tasks added!!");
+	}
+
 }
 
 
