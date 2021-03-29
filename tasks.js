@@ -89,6 +89,9 @@ function onDataReceived(text) {
   else if(trimtxt(text,0).trim() === 'hello'){
     hello(text);
   }
+  else if (text.trim() === 'help') {
+    help();
+  }
   else{
     unknownCommand(text);
   }
@@ -119,7 +122,7 @@ function hello(text){
 }
 
 function help() {
-	console.log("Usage: write tasks then one of the commands [add|check|delete|help] then write the task ");
+	console.log("Usage: write tasks then one of the commands [add|check|remove|help] then write the task ");
 	console.log("`task` is only a string when using `add` and a number\nfor all other commands.");
 	console.log("Using the `tasks` without arguments lists all tasks");
 }
