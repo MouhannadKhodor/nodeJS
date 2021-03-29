@@ -80,6 +80,9 @@ function onDataReceived(text) {
   else if (text.trim() === 'list') {
     list();
   }
+  else if (trimtxt(text,0).trim() === 'add') {
+    add(trimtxt(text,1));
+  }
   else if(trimtxt(text,0).trim() === 'hello'){
     hello(text);
   }
@@ -125,14 +128,27 @@ function list() {
 	
 	if(data.length > 0){
 		//print the list. using ANSI colors and formating
-		console.log("\x1b[93m\x1b[4mTask list:\x1b[24m");
+		console.log(`Task list: \n`);
 		data.forEach(function (task,index){
-			console.log(index+1+"."," ["+(task.completed ? "\x1b[92m✓\x1b[93m" : " ")+"] ",task.task);
+			console.log(index+1+"."," ["+(task.completed ? " " : " ")+"] ",task.task);
 		});
 		
 	}else{
-		console.log("\x1b[91mNo tasks added!!");
+		console.log("No tasks added!!");
 	}
+
+}
+//add task
+function add(task) {
+  if(task == undefined) {return console.log("please add a todo task")}
+	//get data
+	var data = getData();
+
+	//add item
+	data.push({task:task,completed:false});
+
+	//set data
+	setData(data);
 
 }
 
