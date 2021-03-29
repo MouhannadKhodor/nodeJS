@@ -68,7 +68,9 @@ function unknownCommand(c){
  * @returns {void}
  */
 function hello(text){
-  console.log(`hello! `+trimtxt(text,1))
+  var def = trimtxt(text,1);
+  if(def == undefined){return console.log("hello!")}
+  console.log(`hello! `+def)
 }
 
 function help() {
