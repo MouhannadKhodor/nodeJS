@@ -68,6 +68,12 @@ function hello(){
   console.log(`hello! `+ name)
 }
 
+function help() {
+	console.log("Usage: write tasks then one of the commands [add|check|delete|help] then write the task ");
+	console.log("`task` is only a string when using `add` and a number\nfor all other commands.");
+	console.log("Using the `tasks` without arguments lists all tasks");
+}
+
 
 /**
  * Exits the application
